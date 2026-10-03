@@ -1,0 +1,201 @@
+/* Lớp nền: phần tử HTML + component dùng chung. Chỉ dùng biến từ tokens.css. */
+
+:root {
+  color-scheme: light;
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+:root.dark { color-scheme: dark; }
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font: 400 var(--primitive-size-base) / 1.6 var(--primitive-font-ui);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+h1, h2, h3, h4 {
+  font-family: var(--primitive-font-display);
+  color: var(--color-primary);
+  line-height: 1.2;
+  margin: 0;
+  text-wrap: balance;
+}
+h1 { font-size: clamp(var(--primitive-size-2xl), 1.4rem + 1.8vw, var(--primitive-size-3xl)); font-weight: 700; letter-spacing: -0.015em; }
+h2 { font-size: var(--primitive-size-xl); font-weight: 600; }
+h3 { font-size: var(--primitive-size-lg); font-weight: 600; }
+p { margin: 0 0 var(--primitive-space-2); text-wrap: pretty; }
+a { color: var(--color-primary); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+small { font-size: var(--primitive-size-xs); }
+strong { font-weight: 600; }
+:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; border-radius: 2px; }
+::selection { background: var(--color-primary-wash); }
+
+.muted { color: var(--color-muted); }
+.num { font-variant-numeric: tabular-nums; }
+.code { font-variant-numeric: tabular-nums; font-weight: 600; letter-spacing: 0.01em; white-space: nowrap; }
+.visually-hidden {
+  position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ---------- Link bỏ qua ---------- */
+.skip-link {
+  position: absolute; left: var(--primitive-space-4); top: -100px; z-index: var(--z-toast);
+  background: var(--color-primary); color: var(--color-on-primary); padding: var(--primitive-space-2) var(--primitive-space-4);
+  border-radius: var(--primitive-radius-sm); font-weight: 600; text-decoration: none;
+}
+.skip-link:focus { top: var(--primitive-space-3); }
+
+/* ---------- Button ---------- */
+.btn {
+  --_bg: transparent; --_fg: var(--color-primary); --_bd: var(--color-rule-strong); --_bg-hover: var(--color-primary-wash);
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--primitive-space-2);
+  min-height: var(--button-height); padding: 0 var(--primitive-space-4);
+  font: 600 var(--primitive-size-sm) / 1.2 var(--primitive-font-ui);
+  color: var(--_fg); background: var(--_bg); border: 1px solid var(--_bd); border-radius: var(--button-radius);
+  cursor: pointer; text-decoration: none; white-space: nowrap;
+  transition: background-color var(--primitive-duration-fast) ease, border-color var(--primitive-duration-fast) ease, transform var(--primitive-duration-fast) ease;
+}
+.btn:hover { background: var(--_bg-hover); text-decoration: none; }
+.btn:active { transform: translateY(1px); }
+.btn:disabled, .btn[aria-disabled='true'] { opacity: 0.5; cursor: not-allowed; transform: none; }
+.btn-primary { --_bg: var(--button-primary-bg); --_fg: var(--button-primary-fg); --_bd: var(--button-primary-bg); --_bg-hover: var(--button-primary-bg-hover); }
+.btn-danger { --_bg: var(--button-danger-bg); --_fg: var(--color-on-primary); --_bd: var(--button-danger-bg); --_bg-hover: var(--button-danger-bg-hover); }
+:root.dark .btn-danger { --_fg: var(--primitive-color-board-950); }
+.btn-quiet { --_bd: transparent; }
+.btn-sm { min-height: 2rem; padding: 0 var(--primitive-space-3); font-size: var(--primitive-size-xs); }
+.btn-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--primitive-space-2); }
+
+/* ---------- Field / Input ---------- */
+.field { display: flex; flex-direction: column; gap: var(--primitive-space-1); min-width: 0; }
+.field-label { font-weight: 600; font-size: var(--primitive-size-sm); color: var(--color-text); }
+.field-hint { font-size: var(--primitive-size-xs); color: var(--color-muted); }
+.field-error { font-size: var(--primitive-size-xs); color: var(--color-attention); font-weight: 500; }
+.input, .select, .textarea {
+  font: 400 var(--primitive-size-base) var(--primitive-font-ui); color: var(--color-text);
+  background-color: var(--input-bg); border: 1px solid var(--input-border); border-radius: var(--input-radius);
+  min-height: var(--input-height); padding: var(--primitive-space-2) var(--primitive-space-3); width: 100%;
+}
+.textarea { min-height: 6rem; resize: vertical; line-height: 1.5; }
+.select { padding-right: var(--primitive-space-8); }
+.input:focus, .select:focus, .textarea:focus { outline: 2px solid var(--color-primary); outline-offset: 0; border-color: var(--color-primary); }
+.input[aria-invalid='true'] { border-color: var(--color-attention); }
+.check {
+  display: inline-flex; align-items: flex-start; gap: var(--primitive-space-2); cursor: pointer;
+  min-height: 2.75rem; padding: var(--primitive-space-2) 0;
+}
+.check input { width: 1.25rem; height: 1.25rem; margin: 0.15rem 0 0; accent-color: var(--color-primary); cursor: pointer; flex: none; }
+
+/* ---------- Section (thay cho thẻ trắng) ---------- */
+.section { margin-block: var(--primitive-space-10); }
+.section:first-child { margin-top: 0; }
+.section-head {
+  display: flex; align-items: baseline; justify-content: space-between; gap: var(--primitive-space-3); flex-wrap: wrap;
+  padding-bottom: var(--primitive-space-2); margin-bottom: var(--primitive-space-4);
+  border-bottom: 1px solid var(--color-rule);
+}
+.section-head p { margin: var(--primitive-space-1) 0 0; color: var(--color-muted); font-size: var(--primitive-size-sm); max-width: 70ch; }
+.sheet { background: var(--color-surface); border: 1px solid var(--color-rule); border-radius: var(--panel-radius); }
+.sheet-pad { padding: var(--panel-padding); }
+
+/* ---------- Page header ---------- */
+.page-header { margin-bottom: var(--primitive-space-8); max-width: 72ch; }
+.page-header p { margin-top: var(--primitive-space-3); color: var(--color-muted); font-size: var(--primitive-size-lg); }
+.page-header .btn-row { margin-top: var(--primitive-space-4); }
+
+/* ---------- Table ---------- */
+.table-wrap { position: relative; overflow-x: auto; -webkit-overflow-scrolling: touch; background: var(--color-surface); border: 1px solid var(--color-rule); border-radius: var(--panel-radius); }
+.table { width: 100%; border-collapse: collapse; font-size: var(--primitive-size-sm); }
+.table th, .table td { text-align: left; padding: var(--primitive-space-3); border-bottom: 1px solid var(--color-rule); vertical-align: middle; }
+.table thead th { font-weight: 600; font-size: var(--primitive-size-xs); color: var(--color-muted); background: var(--color-sunken); white-space: nowrap; }
+.table tbody tr:last-child > * { border-bottom: 0; }
+.table tbody tr:hover > * { background: color-mix(in srgb, var(--color-primary-wash) 45%, transparent); }
+.table .center { text-align: center; }
+
+/* ---------- Mark: dấu trạng thái, không chỉ dựa vào màu ---------- */
+.mark {
+  --_c: var(--color-muted);
+  display: inline-flex; align-items: center; gap: 0.4em; font-size: var(--primitive-size-sm); font-weight: 600; color: var(--_c);
+  white-space: nowrap;
+}
+.mark::before {
+  content: attr(data-glyph); display: inline-grid; place-items: center; width: 1.3em; height: 1.3em; border-radius: 50%;
+  border: 1.5px solid currentColor; font-size: 0.78em; line-height: 1;
+}
+.mark-good { --_c: var(--color-success); }
+.mark-warn { --_c: var(--color-warning); }
+.mark-bad { --_c: var(--color-attention); }
+.mark-digital { --_c: var(--color-digital); }
+
+/* Khoanh bút đỏ – điểm nhấn của hướng thiết kế */
+.pen-circle {
+  display: inline-block; padding: 0.05em 0.55em; color: var(--color-attention);
+  border: 2px solid var(--color-attention); border-radius: 52% 46% 55% 43% / 58% 50% 52% 46%;
+  transform: rotate(-3deg);
+}
+
+/* ---------- Segmented tabs ---------- */
+.tabs { display: inline-flex; flex-wrap: wrap; gap: var(--primitive-space-1); padding: 3px; background: var(--color-sunken); border-radius: var(--primitive-radius-md); }
+.tabs a, .tabs button {
+  font: 500 var(--primitive-size-sm) var(--primitive-font-ui); color: var(--color-muted); background: transparent; border: 0;
+  min-height: 2.25rem; padding: 0 var(--primitive-space-3); border-radius: var(--primitive-radius-sm); cursor: pointer;
+  display: inline-flex; align-items: center; text-decoration: none;
+}
+.tabs a:hover, .tabs button:hover { color: var(--color-text); }
+.tabs [aria-current='page'], .tabs [aria-selected='true'] { background: var(--color-surface); color: var(--color-primary); font-weight: 600; box-shadow: 0 1px 0 var(--color-rule-strong); }
+
+/* ---------- Note (ghi chú lề đỏ) ---------- */
+.note { border-left: 3px solid var(--color-margin); padding: var(--primitive-space-2) var(--primitive-space-4); background: var(--color-surface); }
+.note-good { border-left-color: var(--color-success); }
+.note-warn { border-left-color: var(--color-warning); }
+
+/* ---------- Empty state ---------- */
+.empty { padding: var(--primitive-space-8) var(--primitive-space-6); text-align: left; border: 1px dashed var(--color-rule-strong); border-radius: var(--panel-radius); background: var(--color-surface); }
+.empty-title { font-size: var(--primitive-size-lg); margin-bottom: var(--primitive-space-2); }
+.empty p { color: var(--color-muted); max-width: 60ch; }
+
+/* ---------- Dialog (thẻ <dialog> gốc: giữ focus, đóng bằng Esc) ---------- */
+.dialog {
+  border: 1px solid var(--color-rule-strong); border-radius: var(--primitive-radius-lg); padding: 0;
+  background: var(--color-surface); color: var(--color-text); box-shadow: var(--shadow-raise);
+  width: min(30rem, calc(100vw - 2rem)); max-height: calc(100dvh - 2rem); overscroll-behavior: contain;
+}
+.dialog::backdrop { background: rgb(22 31 27 / 0.5); }
+.dialog-body { padding: var(--primitive-space-6); }
+.dialog-body h2 { margin-bottom: var(--primitive-space-3); }
+.dialog-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: var(--primitive-space-2); margin-top: var(--primitive-space-6); }
+.dialog[open] { animation: dialog-in var(--primitive-duration-normal) var(--ease-out); }
+@keyframes dialog-in { from { opacity: 0; transform: translateY(8px); } }
+
+/* ---------- Toast ---------- */
+.toast-region { position: fixed; z-index: var(--z-toast); left: 50%; bottom: var(--primitive-space-4); transform: translateX(-50%); display: grid; gap: var(--primitive-space-2); width: min(28rem, calc(100vw - 2rem)); pointer-events: none; }
+.toast {
+  pointer-events: auto; display: flex; align-items: center; gap: var(--primitive-space-3); justify-content: space-between;
+  background: var(--color-text); color: var(--color-bg); border-radius: var(--primitive-radius-md);
+  padding: var(--primitive-space-3) var(--primitive-space-4); box-shadow: var(--shadow-raise); font-size: var(--primitive-size-sm);
+  animation: dialog-in var(--primitive-duration-normal) var(--ease-out);
+}
+.toast .btn { --_fg: var(--color-bg); --_bd: transparent; --_bg-hover: rgb(127 127 127 / 0.25); text-decoration: underline; }
+
+/* ---------- Pill nhỏ cho mã (không dùng cho trạng thái) ---------- */
+.tag { display: inline-block; padding: 0.1em 0.5em; border-radius: var(--primitive-radius-sm); background: var(--color-sunken); color: var(--color-text); font-size: var(--primitive-size-xs); font-weight: 600; text-decoration: none; }
+a.tag:hover { background: var(--color-primary-wash); }
+
+/* ---------- Chuyển cảnh giữa các trang (View Transitions API gốc) ---------- */
+::view-transition-old(main), ::view-transition-new(main) { animation-duration: var(--primitive-duration-normal); animation-timing-function: var(--ease-out); }
+::view-transition-old(main) { animation-name: vt-out; }
+::view-transition-new(main) { animation-name: vt-in; }
+@keyframes vt-out { to { opacity: 0; transform: translateY(-4px); } }
+@keyframes vt-in { from { opacity: 0; transform: translateY(6px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after, ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) {
+    animation-duration: 0.01ms !important; transition-duration: 0.01ms !important;
+  }
+}

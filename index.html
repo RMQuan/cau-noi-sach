@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Công cụ giúp nhà trường xếp mỗi học sinh vào một nguồn học liệu hợp pháp trong những tuần chờ sách giáo khoa: sách luân chuyển, SGK số chính thức và phiếu học tập tự soạn." />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <meta property="og:title" content="Cầu Nối Sách" />
+    <meta property="og:description" content="Xếp mỗi học sinh vào một nguồn học liệu hợp pháp trong những tuần chờ sách giáo khoa." />
+    <meta property="og:image" content="https://rmquan.github.io/cau-noi-sach/og-image.png" />
+    <meta property="og:url" content="https://rmquan.github.io/cau-noi-sach/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script>
+      // Đặt chế độ sáng/tối trước khi vẽ trang để không bị nháy màu
+      (function () {
+        var pref = 'system';
+        try { pref = localStorage.getItem('cau-noi-sach:theme') || 'system'; } catch (e) {}
+        var dark = pref === 'dark' || (pref === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+        if (dark) document.documentElement.classList.add('dark');
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Cầu Nối Sách</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
